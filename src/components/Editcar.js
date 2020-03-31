@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function Newcar(props) {
+export default function Editcar(props) {
     const [open, setOpen] = React.useState(false);
 
     const [car, setCar] = React.useState({
@@ -15,6 +15,15 @@ export default function Newcar(props) {
 
 
     const handleClickOpen = () => {
+        console.log(props);
+        setCar({
+            brand: props.car.brand,
+            model: props.car.model,
+            color: props.car.color,
+            fuel: props.car.fuel,
+            year: props.car.year,
+            price: props.car.price,
+        });
         setOpen(true);
     };
 
@@ -22,8 +31,8 @@ export default function Newcar(props) {
         setOpen(false);
     };
 
-    const addCar = () => {
-        props.savecar(car);
+    const updateCar = () => {
+        props.updateCar(car,props.car._links.car.href);
         handleClose();
     };
 
@@ -33,11 +42,11 @@ export default function Newcar(props) {
     };
     return (
         <div>
-            <Button style={{margin: 10}} variant="outlined" color="primary" onClick={handleClickOpen}>
-                Add new car
+            <Button color="primary" onClick={handleClickOpen}>
+                Edit
             </Button>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Add new car</DialogTitle>
+                <DialogTitle id="form-dialog-title">Edit car</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
@@ -88,8 +97,8 @@ export default function Newcar(props) {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={addCar} color="primary">
-                        Add new car
+                    <Button onClick={updateCar} color="primary">
+                        Save
                     </Button>
                 </DialogActions>
             </Dialog>
